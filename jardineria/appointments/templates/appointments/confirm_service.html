@@ -1,10 +1,14 @@
 {% extends "base.html" %}
-{% block title %}Confirmar Servicio{% endblock %}
-{% block content %}
 
-{% if visits %}
-    <table>
-        <thead>
+{% block title %}Confirmar Servicio{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Confirmar Servicio</h2>
+
+    {% if visits %}
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th>Cliente</th>
                 <th>Dirección</th>
@@ -21,19 +25,19 @@
                 <td>{{ visit.date }}</td>
                 <td>{{ visit.get_status_display }}</td>
                 <td>
-                    <form method="POST">
+                    <form method="POST" style="display:inline;">
                         {% csrf_token %}
                         <input type="hidden" name="visit_id" value="{{ visit.id }}">
-                        <button name="confirmation" value="yes">Servicio Realizado</button>
-                        <button name="confirmation" value="no">Rechazar</button>
+                        <button type="submit" name="confirmation" value="yes" class="btn btn-success btn-sm">Servicio Realizado</button>
+                        <button type="submit" name="confirmation" value="no" class="btn btn-danger btn-sm ml-2">Rechazar</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-{% else %}
-    <p>No hay servicios pendientes de confirmación.</p>
-{% endif %}
-</body>
+    {% else %}
+    <p class="text-center">No hay servicios pendientes de confirmación.</p>
+    {% endif %}
+</div>
 {% endblock %}

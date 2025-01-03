@@ -1,17 +1,23 @@
 {% extends "base.html" %}
+
 {% block title %}Dashboard Jardinero{% endblock %}
+
 {% block content %}
-    <a href="/">Volver</a>
-    <h1>Bienvenido, {{ request.user.username }}</h1>
-    <h2>Visitas Asignadas</h2>
+<div class="container mt-5">
+    <a href="/" class="btn btn-secondary mb-4">Volver</a>
+    <h1 class="text-center mb-4">Bienvenido, {{ request.user.username }}</h1>
+
+    <h2 class="mb-4">Visitas Asignadas</h2>
+
     <!-- Lista de visitas -->
-    <table>
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th>Cliente</th>
                 <th>Dirección</th>
                 <th>Fecha</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -23,14 +29,14 @@
                 <td>{{ visit.get_status_display }}</td>
                 <td>
                     {% if visit.status == "pending" %}
-                    <form method="POST" action="{% url 'update_visit_status' visit.id %}">
+                    <form method="POST" action="{% url 'update_visit_status' visit.id %}" style="display:inline;">
                         {% csrf_token %}
-                        <button name="status" value="in_progress">Marcar en Progreso</button>
+                        <button type="submit" name="status" value="in_progress" class="btn btn-warning btn-sm">Marcar en Progreso</button>
                     </form>
                     {% elif visit.status == "in_progress" %}
-                    <form method="POST" action="{% url 'update_visit_status' visit.id %}">
+                    <form method="POST" action="{% url 'update_visit_status' visit.id %}" style="display:inline;">
                         {% csrf_token %}
-                        <button name="status" value="completed">Marcar Completada</button>
+                        <button type="submit" name="status" value="completed" class="btn btn-success btn-sm">Marcar Completada</button>
                     </form>
                     {% endif %}
                 </td>
@@ -38,4 +44,5 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
 {% endblock %}

@@ -1,24 +1,40 @@
 {% extends "base.html" %}
-{% block title %}Confirmar Servicio{% endblock %}
+
+{% block title %}Crear Visita{% endblock %}
+
 {% block content %}
-    <a href="/">Volver</a>
-    <h1>Crear Visita</h1><form method="POST">
-    {% csrf_token %}
-    <label for="address">Dirección:</label>
-    <input type="text" id="address" name="address" placeholder="Ingresa la dirección" required>
-    <button type="button" onclick="geocodeAddress()">Buscar Dirección</button>
+<div class="container mt-5">
+    <a href="/" class="btn btn-secondary mb-4">Volver</a>
 
-    <div id="map" style="height: 400px; margin-top: 20px;"></div>
+    <h1 class="text-center mb-4">Crear Visita</h1>
 
-    <!-- Campos ocultos para almacenar las coordenadas -->
-    <input type="hidden" id="latitude" name="latitude">
-    <input type="hidden" id="longitude" name="longitude">
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Dirección -->
+        <div class="form-group">
+            <label for="address">Dirección:</label>
+            <input type="text" id="address" name="address" class="form-control" placeholder="Ingresa la dirección" required>
+            <button type="button" class="btn btn-primary mt-2" onclick="geocodeAddress()">Buscar Dirección</button>
+        </div>
 
-    <label for="date">Fecha y Hora:</label>
-    <input type="datetime-local" name="date" id="date" required>
+        <!-- Mapa -->
+        <div id="map" style="height: 400px; margin-top: 20px;"></div>
 
-    <button type="submit">Solicitar Servicio</button>
-</form>
+        <!-- Campos ocultos para coordenadas -->
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+
+        <!-- Fecha y hora -->
+        <div class="form-group mt-4">
+            <label for="date">Fecha y Hora:</label>
+            <input type="datetime-local" name="date" id="date" class="form-control" required>
+        </div>
+
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-success btn-block mt-4">Solicitar Servicio</button>
+    </form>
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script>
@@ -73,5 +89,4 @@
             });
     }
 </script>
-
 {% endblock %}

@@ -1,28 +1,41 @@
 {% extends "base.html" %}
-{% block title %}Servicios Jardineria{% endblock %}
+
+{% block title %}Servicios Jardinería{% endblock %}
+
 {% block content %}
-    <h1>Bienvenido al Sistema de Jardinería</h1>
-    <p>Elige una de las opciones para continuar:</p>
-    <h2>Cliente</h2>
-    <ul>
-        <li>
-            <a href="{% url 'create_visit_request' %}">Crear Visita</a>
-        </li>
-        <li>
-            <a href="{% url 'list_visit_requests' %}">Revisar Mis Visitas</a>
-        </li>
-        <li>
-            <a href="{% url 'confirm_service' %}">Confirmar una Visita</a>
-        </li>
-    </ul>
-    <h2>Jardinero</h2>
-    <ul>
-        <li>
-            <a href="{% url 'list_visit_requests' %}">Tomar Visitas</a>
-        </li>
-        <li>
-            <a href="{% url 'gardener_dashboard' %}">Historial Visitas</a>
-        </li>
-    </ul>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Bienvenido al Sistema de Jardinería</h1>
+    <p class="text-center mb-4">Elige una de las opciones para continuar:</p>
+
+    <div class="row">
+        <!-- Columna Cliente -->
+        <div class="col-md-6">
+            <h2 class="text-primary">Cliente</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{% url 'create_visit_request' %}" class="btn btn-link">Crear Visita</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'list_visit_requests' %}" class="btn btn-link">Revisar Mis Visitas</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'confirm_service' %}" class="btn btn-link">Confirmar una Visita</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Columna Jardinero -->
+        <div class="col-md-6">
+            <h2 class="text-success">Jardinero</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{% url 'list_visit_requests' %}" class="btn btn-link">Tomar Visitas</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'gardener_dashboard' %}" class="btn btn-link">Historial Visitas</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
-</html>

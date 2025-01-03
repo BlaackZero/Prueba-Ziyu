@@ -1,10 +1,14 @@
 {% extends "base.html" %}
+
 {% block title %}Lista de Visitas{% endblock %}
+
 {% block content %}
-    <a href="/">Volver</a>
-    <h2>Solicitudes de Visitas</h2>
-    <table>
-        <thead>
+<div class="container mt-5">
+    <a href="/" class="btn btn-secondary mb-4">Volver</a>
+    <h2 class="text-center mb-4">Solicitudes de Visitas</h2>
+    
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th>Cliente</th>
                 <th>Dirección</th>
@@ -22,14 +26,16 @@
                 <td>{{ visit.get_status_display }}</td>
                 <td>
                     <!-- Botón para previsualizar en el mapa -->
-                    <button onclick="previewAddress({{ visit.latitude }}, {{ visit.longitude }}, '{{ visit.address }}')">Ver en Mapa</button>
+                    <button onclick="previewAddress({{ visit.latitude }}, {{ visit.longitude }}, '{{ visit.address }}')" class="btn btn-info btn-sm">Ver en Mapa</button>
                     {% if not visit.gardener %}
                     <form method="POST" action="{% url 'assign_visit' visit.id %}" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit">Tomar Visita</button>
+                        <button type="submit" class="btn btn-success btn-sm">Tomar Visita</button>
                     </form>
                     {% else %}
-                    Asignada a: {{ visit.gardener.name }}
+                    <span class="badge badge-primary">
+                        <p class="text-primary">Asignada a: {{ visit.gardener.name }}</p>
+                    </span>
                     {% endif %}
                 </td>
             </tr>
@@ -37,8 +43,9 @@
         </tbody>
     </table>
     
-    <h2>Previsualización del Mapa</h2>
+    <h2 class="text-center mt-5">Previsualización del Mapa</h2>
     <div id="map" style="height: 400px; margin-top: 20px;"></div>
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script>

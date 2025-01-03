@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Servicios Jardineria{% endblock %}
+{% block content %}
+    <h1>Bienvenido al Sistema de Jardinería</h1>
+    <p>Elige una de las opciones para continuar:</p>
+    <h2>Cliente</h2>
+    <ul>
+        <li>
+            <a href="{% url 'create_visit_request' %}">Crear Visita</a>
+        </li>
+        <li>
+            <a href="{% url 'list_visit_requests' %}">Revisar Mis Visitas</a>
+        </li>
+        <li>
+            <a href="{% url 'confirm_service' %}">Confirmar una Visita</a>
+        </li>
+    </ul>
+    <h2>Jardinero</h2>
+    <ul>
+        <li>
+            <a href="{% url 'list_visit_requests' %}">Tomar Visitas</a>
+        </li>
+        <li>
+            <a href="{% url 'gardener_dashboard' %}">Historial Visitas</a>
+        </li>
+    </ul>
+{% endblock %}
+</html>

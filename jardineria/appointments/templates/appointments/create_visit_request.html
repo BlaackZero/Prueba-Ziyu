@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Confirmar Servicio{% endblock %}
+{% block content %}
+    <a href="/">Volver</a>
+    <h1>Crear Visita</h1><form method="POST">
+    {% csrf_token %}
+    <label for="address">Dirección:</label>
+    <input type="text" id="address" name="address" placeholder="Ingresa la dirección" required>
+    <button type="button" onclick="geocodeAddress()">Buscar Dirección</button>
+
+    <div id="map" style="height: 400px; margin-top: 20px;"></div>
+
+    <!-- Campos ocultos para almacenar las coordenadas -->
+    <input type="hidden" id="latitude" name="latitude">
+    <input type="hidden" id="longitude" name="longitude">
+
+    <label for="date">Fecha y Hora:</label>
+    <input type="datetime-local" name="date" id="date" required>
+
+    <button type="submit">Solicitar Servicio</button>
+</form>
+
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script>
+    // Inicializa el mapa
+    const map = L.map('map').setView([0, 0], 2); // Vista inicial
+
+    // Añade el fondo del mapa
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    // Marker para la ubicación seleccionada
+    let marker;
+
+    function geocodeAddress() {
+        const address = document.getElementById("address").value;
+
+        if (!address) {
+            alert("Por favor, ingresa una dirección.");
+            return;
+        }
+
+        // Llamada a la API de geocodificación
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${address}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length === 0) {
+                    alert("No se pudo encontrar la dirección.");
+                    return;
+                }
+
+                // Obtiene las coordenadas de la primera coincidencia
+                const { lat, lon } = data[0];
+
+                // Mueve el mapa a la ubicación
+                map.setView([lat, lon], 15);
+
+                // Coloca o actualiza el marcador
+                if (marker) {
+                    marker.setLatLng([lat, lon]);
+                } else {
+                    marker = L.marker([lat, lon]).addTo(map);
+                }
+
+                // Actualiza los campos ocultos con las coordenadas
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lon;
+            })
+            .catch(error => {
+                console.error("Error al geocodificar:", error);
+                alert("Ocurrió un error al buscar la dirección.");
+            });
+    }
+</script>
+
+{% endblock %}

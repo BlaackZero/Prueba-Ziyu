@@ -10,9 +10,6 @@ from .models import Client, VisitRequest, Gardener
 from django.shortcuts import render
 
 def index(request):
-    """
-    Página de inicio donde se muestran las opciones de navegación.
-    """
     return render(request, "appointments/index.html")
 
 
